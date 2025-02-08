@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Fitness API">
+    <title>💪 Daily Fitness Tip</title>
+   
+    <style>
+        body {
+            font-family: 'Verdana', sans-serif;
+            background-color: #e3f2fd;
+            text-align: center;
+            padding: 40px;
+            margin: 0;
+        }
+
+        .tip-container {
+            background: white;
+            padding: 20px;
+            max-width: 500px;
+            margin: auto;
+            border-radius: 12px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #1565c0;
+            font-size: 28px;
+        }
+
+        #tip_display {
+            font-size: 18px;
+            color: #444;
+            margin-top: 20px;
+            font-style: italic;
+        }
+
+        .fetch-tip-btn {
+            background-color: #ff5722;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            margin-top: 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+        }
+
+        .fetch-tip-btn:hover {
+            background-color: #e64a19;
+        }
+    </style>
+   
+    <script>
+        async function fetchFitnessTip() {
+            try {
+                const response = await fetch("http://192.168.100.4:5000/fitness-tip");
+                if (!response.ok) {
+                    throw new Error("Failed to fetch tip");
+                }
+                const tipData = await response.json();
+                document.getElementById("tip_display").innerText = tipData.tip;
+            } catch (error) {
+                document.getElementById("tip_display").innerText = "Oops! Unable to fetch a fitness tip. Try again.";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="tip-container">
+        <h1>🏋️ Your Daily Fitness Tip</h1>
+        <p id="tip_display">Click the button below to get today's fitness tip!</p>
+        <button class="fetch-tip-btn" onclick="fetchFitnessTip()">Show Fitness Tip</button>
+    </div>
+
+</body>
+</html>
